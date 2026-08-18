@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NayanCare – Eye Hospital Management System</title>
+  <meta name="description" content="NayanCare is a complete Eye Hospital Management System with modules for Front Desk, Optometrist, Doctor, Pharmacy, Optical, IPD/OPD, CRM, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green:       #1DB879;
+      --green-dark:  #17a568;
+      --green-light: #e6f9f1;
+      --green-mid:   #9FE1CB;
+      --navy:        #162d3a;
+      --navy-mid:    #1e3a4a;
+      --navy-light:  #254a5e;
+      --teal-text:   #0f6e56;
+      --body-text:   #3a5a4a;
+      --muted:       #6a8a7a;
+      --border:      #c5e8d5;
+      --surface:     #f7fdf9;
+      --white:       #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--body-text);
+      background: var(--white);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--navy); }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); text-decoration: none; }
+
+    .nav-cta {
+      background: var(--green);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-dark) !important; text-decoration: none; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--surface);
+      padding: 80px 5% 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-light);
+      color: var(--teal-text);
+      border: 1px solid var(--green-mid);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 22px;
+      letter-spacing: 0.3px;
+    }
+    .hero-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      margin-bottom: 18px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-outline:hover { border-color: var(--green); background: var(--green-light); }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat .num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .hero-stat .num span { color: var(--green); }
+    .hero-stat .lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* Hero visual panel */
+    .hero-visual {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .hv-card {
+      background: var(--navy-mid);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .hv-card:hover { background: var(--navy-light); }
+    .hv-card.active { background: var(--green); }
+
+    .hv-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hv-card.active .hv-icon { background: rgba(255,255,255,0.25); }
+    .hv-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .hv-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── SECTION COMMONS ── */
+    .section { padding: 72px 5%; }
+    .section-center { text-align: center; max-width: 640px; margin: 0 auto 52px; }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-center h2 { font-size: clamp(22px, 3vw, 32px); margin-bottom: 14px; }
+    .section-center p { color: var(--muted); font-size: 15px; }
+
+    /* ── MODULES ── */
+    .modules-bg { background: var(--surface); }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 16px;
+    }
+
+    .mod-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 16px 20px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .mod-card:hover {
+      border-color: var(--green);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(29,184,121,0.12);
+    }
+
+    .mod-icon-wrap {
+      width: 52px;
+      height: 52px;
+      background: var(--green-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .mod-icon-wrap svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mod-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .mod-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+    .feat-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--green-light);
+      letter-spacing: -1px;
+    }
+    .feat-num span { color: var(--green); }
+    .feat-card h3 { font-size: 16px; margin: 12px 0 8px; }
+    .feat-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── CLIENTS ── */
+    .clients-bg { background: var(--navy); }
+    .clients-bg .eyebrow { color: var(--green-mid); }
+    .clients-bg .section-center h2 { color: #fff; }
+    .clients-bg .section-center p { color: rgba(255,255,255,0.55); }
+
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .client-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(159,225,203,0.2);
+      border-radius: 12px;
+      padding: 22px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .client-dot-wrap {
+      width: 38px;
+      height: 38px;
+      background: rgba(29,184,121,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .client-dot-wrap svg { width: 18px; height: 18px; stroke: var(--green); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .client-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .client-loc { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+    .clients-cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .clients-cta p { color: rgba(255,255,255,0.55); font-size: 14px; margin-bottom: 16px; }
+
+    /* ── DEMO FORM ── */
+    .form-bg { background: var(--surface); }
+
+    .form-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 52px;
+    }
+
+    .form-header { margin-bottom: 36px; }
+    .form-header h2 { font-size: 26px; margin-bottom: 8px; }
+    .form-header p { color: var(--muted); font-size: 14px; }
+
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+    .fg label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .fg input,
+    .fg select,
+    .fg textarea {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .fg input::placeholder,
+    .fg textarea::placeholder { color: #b0c4bc; }
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(29,184,121,0.14);
+    }
+    .fg select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236a8a7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+    .fg textarea { resize: vertical; min-height: 90px; }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 14px;
+    }
+    .form-note svg { width: 13px; height: 13px; display: inline; vertical-align: -2px; stroke: var(--green); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .success-box {
+      display: none;
+      background: var(--green-light);
+      border: 1px solid var(--green-mid);
+      border-radius: 10px;
+      padding: 18px 22px;
+      text-align: center;
+      color: var(--teal-text);
+      font-size: 14px;
+      margin-top: 18px;
+      animation: fadeSlideIn 0.35s ease;
+    }
+    .success-box strong { display: block; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+
+    .error-box {
+      display: none;
+      background: #fdeeee;
+      border: 1px solid #f3c6c6;
+      border-radius: 10px;
+      padding: 18px 22px;
+      text-align: center;
+      color: #b13636;
+      font-size: 14px;
+      margin-top: 18px;
+      animation: fadeSlideIn 0.35s ease;
+    }
+    .error-box strong { display: block; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fg.invalid input,
+    .fg.invalid select {
+      border-color: #e08a8a;
+      box-shadow: 0 0 0 3px rgba(224,138,138,0.14);
+    }
+
+    .btn-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      display: inline-block;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .form-wrap {
+      box-shadow: 0 20px 60px -20px rgba(22,45,58,0.18);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 48px 5% 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .logo { font-size: 22px; }
+    .footer-brand p { color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 12px; line-height: 1.7; max-width: 280px; }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.5); font-size: 13px; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--green); text-decoration: none; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.35); font-size: 12px; }
+    .footer-bottom a { color: var(--green-mid); }
+
+    /* ── MOBILE NAV ── */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 5%;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--surface);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { display: none; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 52px 5% 48px; }
+      .section { padding: 52px 5%; }
+      .form-wrap { padding: 28px 22px; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .hero-stats { flex-wrap: wrap; gap: 18px; }
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="logo">nāyān<span>care</span></div>
+  <ul class="nav-links">
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#why">Why NayanCare</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#demo" class="nav-cta">Free Demo</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#modules" onclick="toggleMenu()">Modules</a>
+  <a href="#why" onclick="toggleMenu()">Why NayanCare</a>
+  <a href="#clients" onclick="toggleMenu()">Clients</a>
+  <a href="#demo" onclick="toggleMenu()">Free Demo</a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/></svg>
+      India's Eye Hospital Management Platform
+    </div>
+    <h1>Complete software for<br><em>modern eye hospitals</em></h1>
+    <p class="hero-sub">
+      From front desk to pharmacy — NayanCare brings all your hospital operations under one smart, connected platform built specifically for eye care.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Free Demo
+      </button>
+      <button class="btn-outline" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">
+        Explore Modules
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num"><span>10</span>+</div>
+        <div class="lbl">Integrated modules</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num"><span>1</span></div>
+        <div class="lbl">Trusted hospital client</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num"><span>100</span>%</div>
+        <div class="lbl">Cloud-based & secure</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hv-card active">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="hv-name">Front Desk</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="hv-name">Appointment</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/></svg>
+      </div>
+      <div class="hv-name">Optometrist</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="hv-name">Doctor</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="hv-name">Counselling</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="hv-name">CRM</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+      </div>
+      <div class="hv-name">IPD / OPD</div>
+    </div>
+    <div class="hv-card">
+      <div class="hv-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      </div>
+      <div class="hv-name">Pharmacy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MODULES ── -->
+<section class="section modules-bg" id="modules">
+  <div class="section-center">
+    <p class="eyebrow">Modules</p>
+    <h2>Everything your eye hospital needs</h2>
+    <p>12 fully integrated modules — each built for the real workflows of eye care hospitals across India.</p>
+  </div>
+  <div class="modules-grid">
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="mod-name">Front Desk</div>
+      <div class="mod-desc">Patient registration, token management, and daily operations at the reception.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="mod-name">Appointment</div>
+      <div class="mod-desc">Book, reschedule, and manage patient appointments with doctor availability tracking.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/></svg>
+      </div>
+      <div class="mod-name">Optometrist</div>
+      <div class="mod-desc">Record refraction tests, vision data, eye diagnostics, and prescriptions digitally.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="mod-name">Doctor</div>
+      <div class="mod-desc">Doctors view and manage patient diagnosis history, edit records, and plan treatment.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="mod-name">Counselling</div>
+      <div class="mod-desc">Track patient counselling sessions, surgery recommendations, and follow-ups.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="mod-name">CRM</div>
+      <div class="mod-desc">Manage patient relationships, follow-up calls, campaign tracking, and loyalty programs.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="mod-name">IPD / OPD</div>
+      <div class="mod-desc">Inpatient and outpatient management — admissions, beds, discharge summaries, and billing.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      </div>
+      <div class="mod-name">Pharmacy</div>
+      <div class="mod-desc">Manage medicines, prescriptions, stock levels, expiry tracking, and billing — all in one.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="4"/><circle cx="15" cy="12" r="4"/><line x1="9" y1="8" x2="9" y2="16"/><line x1="15" y1="8" x2="15" y2="16"/></svg>
+      </div>
+      <div class="mod-name">Optical</div>
+      <div class="mod-desc">Manage frames, lenses, orders, and deliveries in your optical shop with ease.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div class="mod-name">Reports</div>
+      <div class="mod-desc">Powerful analytics and reports — daily, monthly, financial, doctor-wise, and custom.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="mod-name">Commission</div>
+      <div class="mod-desc">Track and manage doctor, staff, and referral commissions automatically and accurately.</div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div class="mod-name">Admin</div>
+      <div class="mod-desc">Full system control — users, roles, permissions, hospital settings, and configuration.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY NAYANCARE ── -->
+<section class="section" id="why">
+  <div class="section-center">
+    <p class="eyebrow">Why NayanCare</p>
+    <h2>Built ground-up for eye hospitals</h2>
+    <p>Generic hospital software misses the nuances of eye care. NayanCare is purpose-built for how eye hospitals actually work.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-num"><span>01</span></div>
+      <h3>Eye-care specific workflows</h3>
+      <p>Refraction entries, vision records, optometry reports — all designed around the real processes of an eye hospital, not adapted from general HMS.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num"><span>02</span></div>
+      <h3>All departments connected</h3>
+      <p>Front desk, doctor, pharmacy, and optical share real-time data. No double entry, no lost information between departments.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num"><span>03</span></div>
+      <h3>Cloud-based & always available</h3>
+      <p>Access your hospital data securely from anywhere — desktop, tablet, or mobile. No installation, no server room required.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num"><span>04</span></div>
+      <h3>Fast onboarding & support</h3>
+      <p>Get your team up and running quickly with dedicated onboarding support and training. We stay with you beyond go-live.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num"><span>05</span></div>
+      <h3>Powerful reporting & insights</h3>
+      <p>Track revenue, patient trends, doctor performance, and inventory — with reports that help you make smarter decisions every day.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num"><span>06</span></div>
+      <h3>Pharmacy & optical built in</h3>
+      <p>Unlike most HMS products, NayanCare ships with complete pharmacy and optical shop management — no extra software needed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CLIENTS ── -->
+<section class="section clients-bg" id="clients">
+  <div class="section-center">
+    <p class="eyebrow">Our clients</p>
+    <h2>Trusted by eye care hospitals</h2>
+    <p>Leading eye hospitals across India rely on NayanCare to run their daily operations.</p>
+  </div>
+  <div class="clients-grid">
+    <div class="client-card">
+      <div class="client-dot-wrap">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div>
+        <div class="client-name">Triloki Eye Care Hospital</div>
+        <div class="client-loc">Barnala, Punjab</div>
+      </div>
+    </div>
+    <div class="client-card" style="border-style: dashed; opacity: 0.55;">
+      <div class="client-dot-wrap">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <div>
+        <div class="client-name">Your hospital could be next</div>
+        <div class="client-loc">Book a free demo today</div>
+      </div>
+    </div>
+  </div>
+  <div class="clients-cta">
+    <p>Join a growing network of eye hospitals using NayanCare</p>
+    <button class="btn-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+      Get Started Free
+    </button>
+  </div>
+</section>
+
+<!-- ── DEMO FORM ── -->
+<section class="section form-bg" id="demo">
+  <div class="section-center">
+    <p class="eyebrow">Free Demo</p>
+    <h2>See NayanCare in action</h2>
+    <p>Fill in your details and our team will call you within 24 hours to schedule a live, personalized demo — completely free.</p>
+  </div>
+  <div class="form-wrap">
+    <div class="form-header">
+      <h2>Request your free demo</h2>
+      <p>No commitment. No credit card. Just a 30-minute walkthrough tailored to your hospital.</p>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="fg">
+        <label for="f-name">Your name *</label>
+        <input type="text" id="f-name" placeholder="Dr. Rajesh Kumar" autocomplete="name" />
+      </div>
+      <div class="fg">
+        <label for="f-desig">Designation *</label>
+        <input type="text" id="f-desig" placeholder="Director / Hospital Manager" />
+      </div>
+    </div>
+
+    <div class="fg">
+      <label for="f-hosp">Hospital name *</label>
+      <input type="text" id="f-hosp" placeholder="ABC Eye Care Hospital" />
+    </div>
+
+    <div class="form-grid-2">
+      <div class="fg">
+        <label for="f-city">City *</label>
+        <input type="text" id="f-city" placeholder="Chandigarh" />
+      </div>
+      <div class="fg">
+        <label for="f-state">State</label>
+        <input type="text" id="f-state" placeholder="Punjab" />
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="fg">
+        <label for="f-phone">Mobile number *</label>
+        <input type="tel" id="f-phone" placeholder="+91 98765 43210" autocomplete="tel" />
+      </div>
+      <div class="fg">
+        <label for="f-email">Email address</label>
+        <input type="email" id="f-email" placeholder="you@hospital.com" autocomplete="email" />
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="fg">
+        <label for="f-docs">Number of doctors</label>
+        <select id="f-docs">
+          <option value="">Select range</option>
+          <option>1 – 3 doctors</option>
+          <option>4 – 10 doctors</option>
+          <option>11 – 25 doctors</option>
+          <option>25+ doctors</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label for="f-size">Hospital size</label>
+        <select id="f-size">
+          <option value="">Select size</option>
+          <option>Small (up to 20 beds)</option>
+          <option>Medium (20 – 100 beds)</option>
+          <option>Large (100+ beds)</option>
+          <option>Multi-branch</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label for="f-modules">Modules you are most interested in</label>
+      <select id="f-modules">
+        <option value="">Select primary interest</option>
+        <option>Full suite (all modules)</option>
+        <option>Front Desk + Appointments</option>
+        <option>Optometrist + Doctor module</option>
+        <option>IPD / OPD management</option>
+        <option>Pharmacy + Optical</option>
+        <option>Reports + CRM + Commission</option>
+      </select>
+    </div>
+
+    <div class="fg">
+      <label for="f-note">Anything specific you would like to see?</label>
+      <textarea id="f-note" placeholder="Tell us about your hospital setup, current challenges, or specific requirements..."></textarea>
+    </div>
+
+    <button class="btn-primary" id="demo-submit-btn" style="width:100%; justify-content:center; font-size:16px; padding:15px;" onclick="submitDemo()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Request Free Demo
+    </button>
+
+    <div class="success-box" id="success-box">
+      <strong>Thank you! We'll be in touch soon.</strong>
+      Our team will call you within 24 hours to schedule your personalized demo.
+    </div>
+
+    <div class="error-box" id="error-box">
+      <strong>Something went wrong.</strong>
+      <span id="error-box-text">We couldn't send your request. Please try again, or call us directly.</span>
+    </div>
+
+    <p class="form-note">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Your information is kept private and never shared with third parties.
+    </p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">nāyān<span style="color:#9FE1CB;">care</span></div>
+      <p>A complete Eye Hospital Management System built for modern eye care hospitals across India. Trusted, integrated, and easy to use.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Modules</h4>
+      <ul>
+        <li><a href="#modules">Front Desk</a></li>
+        <li><a href="#modules">Optometrist</a></li>
+        <li><a href="#modules">Doctor</a></li>
+        <li><a href="#modules">IPD / OPD</a></li>
+        <li><a href="#modules">Pharmacy</a></li>
+        <li><a href="#modules">Optical</a></li>
+        <li><a href="#modules">Reports</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#why">Why NayanCare</a></li>
+        <li><a href="#clients">Our Clients</a></li>
+        <li><a href="#demo">Free Demo</a></li>
+        <li><a href="mailto:hello@nayancare.in">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 NayanCare. All rights reserved.</p>
+    <p>Made with care for eye healthcare in India</p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    var m = document.getElementById('mobile-menu');
+    m.classList.toggle('open');
+  }
+
+  var ORIGINAL_BTN_HTML = null;
+
+  function fieldValue(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function markInvalid(id, invalid) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var wrap = el.closest('.fg');
+    if (wrap) wrap.classList.toggle('invalid', invalid);
+  }
+
+  async function submitDemo() {
+    var successBox = document.getElementById('success-box');
+    var errorBox = document.getElementById('error-box');
+    successBox.style.display = 'none';
+    errorBox.style.display = 'none';
+
+    var payload = {
+      name: fieldValue('f-name'),
+      designation: fieldValue('f-desig'),
+      hospitalName: fieldValue('f-hosp'),
+      city: fieldValue('f-city'),
+      state: fieldValue('f-state'),
+      phone: fieldValue('f-phone'),
+      email: fieldValue('f-email'),
+      doctorsRange: fieldValue('f-docs'),
+      hospitalSize: fieldValue('f-size'),
+      moduleInterest: fieldValue('f-modules'),
+      notes: fieldValue('f-note')
+    };
+
+    var required = ['f-name', 'f-desig', 'f-hosp', 'f-city', 'f-phone'];
+    var firstInvalid = null;
+    required.forEach(function (id) {
+      var invalid = !fieldValue(id);
+      markInvalid(id, invalid);
+      if (invalid && !firstInvalid) firstInvalid = id;
+    });
+    if (firstInvalid) {
+      document.getElementById(firstInvalid).focus();
+      return;
+    }
+
+    var btn = document.getElementById('demo-submit-btn');
+    if (ORIGINAL_BTN_HTML === null) ORIGINAL_BTN_HTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.style.opacity = '0.85';
+    btn.innerHTML = '<span class="btn-spinner"></span> Sending request...';
+
+    try {
+      var response = await fetch('/api/demo-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      var data = null;
+      try { data = await response.json(); } catch (e) { /* no body */ }
+
+      if (!response.ok) {
+        var message = (data && (data.detail || data.title)) ||
+          (data && data.errors && data.errors.join(' ')) ||
+          'We could not send your request. Please try again.';
+        throw new Error(message);
+      }
+
+      btn.style.background = '#17a568';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Demo Requested!';
+
+      successBox.style.display = 'block';
+      successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.innerHTML = ORIGINAL_BTN_HTML;
+
+      document.getElementById('error-box-text').textContent =
+        (err && err.message) || 'We could not send your request. Please try again, or call us directly.';
+      errorBox.style.display = 'block';
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+</script>
+</body>
+</html>

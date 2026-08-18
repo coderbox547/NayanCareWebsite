@@ -1,0 +1,22 @@
+services:
+  nayancare-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nayancare-web:latest
+    container_name: nayancare-web
+    ports:
+      - "8080:8080"
+    environment:
+      # Override any appsettings.json value with double-underscore syntax.
+      # Put real values in a local .env file (see .env.example) — never commit them.
+      EmailSettings__Host: ${SMTP_HOST:-smtp.gmail.com}
+      EmailSettings__Port: ${SMTP_PORT:-587}
+      EmailSettings__EnableSsl: ${SMTP_ENABLE_SSL:-true}
+      EmailSettings__Username: ${SMTP_USERNAME}
+      EmailSettings__Password: ${SMTP_PASSWORD}
+      EmailSettings__FromAddress: ${SMTP_FROM_ADDRESS}
+      EmailSettings__FromName: ${SMTP_FROM_NAME:-NayanCare Website}
+      EmailSettings__ToAddress: ${SMTP_TO_ADDRESS}
+      EmailSettings__SendConfirmationToRequester: ${SMTP_SEND_CONFIRMATION:-true}
+    restart: unless-stopped
