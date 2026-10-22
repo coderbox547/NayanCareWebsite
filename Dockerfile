@@ -1,16 +1,25 @@
-FROM node:22-slim
+# ── Build stage ───────────────────────────────────────────────
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
 
+COPY NayanCareWeb.csproj ./
+RUN dotnet restore "NayanCareWeb.csproj"
+
+COPY . .
+RUN dotnet publish "NayanCareWeb.csproj" -c Release -o /app/publish --no-restore
+
+# ── Runtime stage ────────────────────────────────────────────
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install --omit=dev
+RUN adduser --disabled-password --gecos "" appuser
+USER appuser
 
-COPY tsconfig.json ./
-COPY server.ts ./
-COPY wwwroot/ ./wwwroot/
+COPY --from=build /app/publish .
 
-EXPOSE 3000
-ENV PORT=3000 \
-    NODE_ENV=production
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080 \
+    ASPNETCORE_ENVIRONMENT=Production \
+    DOTNET_EnableDiagnostics=0
 
-CMD ["npx", "tsx", "server.ts"]
+ENTRYPOINT ["dotnet", "NayanCareWeb.dll"]
