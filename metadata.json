@@ -1,0 +1,7 @@
+{
+  "name": "NayanCare – Eye Hospital Management System",
+  "description": "NayanCare is a complete Eye Hospital Management System with modules for Front Desk, Optometrist, Doctor, Pharmacy, Optical, IPD/OPD, CRM, and more.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
