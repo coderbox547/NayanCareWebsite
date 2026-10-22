@@ -183,13 +183,13 @@ app.post('/api/demo-request', demoRateLimiter, async (req: Request, res: Respons
   console.log(`[Demo Request] Received from ${submission.name} for ${submission.hospitalName} (${submission.city})`);
 
   // Email delivery using SMTP if configured
-  const smtpHost = process.env.SMTP_HOST;
+  const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
   const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
-  const smtpUser = process.env.SMTP_USERNAME;
-  const smtpPass = process.env.SMTP_PASSWORD;
+  const smtpUser = process.env.SMTP_USERNAME || "bhanu.chauhan83@gmail.com";
+  const smtpPass = process.env.SMTP_PASSWORD || "utjc mdxz lefg shnn";
   const fromAddress = process.env.SMTP_FROM_ADDRESS || smtpUser || 'no-reply@nayancare.in';
   const fromName = process.env.SMTP_FROM_NAME || 'NayanCare Website';
-  const toAddress = process.env.SMTP_TO_ADDRESS;
+  const toAddress = process.env.SMTP_TO_ADDRESS || "bhanu_chauhan83@yahoo.com";
   const sendConfirmation = process.env.SMTP_SEND_CONFIRMATION === 'true' || process.env.SMTP_SEND_CONFIRMATION === '1';
 
   if (smtpHost && toAddress) {
